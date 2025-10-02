@@ -1,4 +1,4 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, desktopCapturer } = require("electron");
 const path = require("path");
 let win;
 function create() {
@@ -10,6 +10,13 @@ function create() {
       contextIsolation: false,
     },
   });
+  desktopCapturer
+    .getSources({ types: ["window", "screen"] })
+    .then(async (sources) => {
+      for (const source of sources) {
+        send("SET_SOURCE", source.id);
+      }
+    });
   win.loadFile(
     path.resolve(__dirname, "../../renderer/pages/control/index.html")
   );
