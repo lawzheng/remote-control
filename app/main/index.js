@@ -6,4 +6,5 @@ const { create: createControlWindow } = require('./windows/control')
 app.on('ready', () => {
   createControlWindow();
   handleIpc();
+  require('./robot')();
 })

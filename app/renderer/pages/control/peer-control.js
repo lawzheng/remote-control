@@ -3,7 +3,7 @@ const peer = new EventEmitter();
 const { ipcRenderer } = require("electron");
 
 ipcRenderer.on("SET_SOURCE", async (event, sourceId) => {
-    console.log("sourceId", sourceId);
+  console.log("sourceId", sourceId);
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: false,
@@ -91,17 +91,16 @@ ipcRenderer.on("SET_SOURCE", async (event, sourceId) => {
 // };
 
 // 先把robot屏蔽
-// peer.on('robot', (type, data) => {
-//     console.log('robot', type, data)
-//     if(type === 'mouse') {
-//         data.screen = {
-//             width: window.screen.width,
-//             height: window.screen.height
-//         }
-//     }
-//     setTimeout(() => {
-//     ipcRenderer.send('robot', type, data)
-//     }, 2000)
-//
-// })
+peer.on("robot", (type, data) => {
+  console.log("robot", type, data);
+  if (type === "mouse") {
+    data.screen = {
+      width: window.screen.width,
+      height: window.screen.height,
+    };
+  }
+//   setTimeout(() => {
+    ipcRenderer.send("robot", type, data);
+//   }, 2000);
+});
 module.exports = peer;

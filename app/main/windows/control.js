@@ -14,6 +14,9 @@ function create() {
     .getSources({ types: ["window", "screen"] })
     .then(async (sources) => {
       for (const source of sources) {
+        if (source.name !== "屏幕 1") {
+          return;
+        }
         send("SET_SOURCE", source.id);
       }
     });
