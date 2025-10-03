@@ -1,52 +1,53 @@
-const {BrowserWindow} = require('electron')
-const isDev = require('electron-is-dev')
-const path = require('path')
+const { BrowserWindow } = require("electron");
+const isDev = require("electron-is-dev");
+const path = require("path");
 
-let win
-let willQuitApp = false
-function create () {
-    win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
-        },
-    })
+let win;
+let willQuitApp = false;
+function create() {
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
 
-    win.on('close', (e) => {
-        if (willQuitApp) {
-            win = null;
-        } else {
-            e.preventDefault();
-            win.hide();
-        }
-    })
-
-    win.on('ready-to-show', () => {
-        win.show()
-    })
-
-    if (isDev) {
-        win.loadURL('http://localhost:5173')
+  win.on("close", (e) => {
+    if (willQuitApp) {
+      win = null;
     } else {
-        // 第三章用到
-        win.loadFile(path.resolve(__dirname, '../../renderer/pages/main/index.html'))
+      e.preventDefault();
+      win.hide();
     }
+  });
 
+  win.on("ready-to-show", () => {
+    win.show();
+  });
+
+  if (isDev) {
+    win.loadURL("http://localhost:5173");
+  } else {
+    // 第三章用到
+    win.loadFile(
+      path.resolve(__dirname, "../../renderer/pages/main/index.html")
+    );
+  }
 }
 
 function send(channel, ...args) {
-    win.webContents.send(channel, ...args)
+  win.webContents.send(channel, ...args);
 }
 function show() {
-    if (win.isMinimized()) win.restore()
-    win.show()
+  if (win.isMinimized()) win.restore();
+  win.show();
 }
 
 function close() {
-    willQuitApp = true
-    win.close()
+  willQuitApp = true;
+  win.close();
 }
 
-module.exports = {create, send, show, close}
+module.exports = { create, send, show, close };
