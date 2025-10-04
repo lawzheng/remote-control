@@ -1,4 +1,4 @@
-const { BrowserWindow } = require("electron");
+const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
 const path = require("path");
 
@@ -27,7 +27,7 @@ function create() {
     win.show();
   });
 
-  if (isDev) {
+  if (!app.isPackaged) {
     win.loadURL("http://localhost:5173");
   } else {
     // 第三章用到
