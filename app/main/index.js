@@ -11,10 +11,10 @@ if (!gotTheLock) {
   app.quit();
 } else {
   app.on("will-finish-launching", () => {
-    // if (!isDev) {
-    require("./updater.js");
-    // }
-    // require("./crash-reporter").init();
+    if (app.isPackaged) {
+      require("./updater.js");
+    }
+    require("./crash-reporter").init();
   });
   app.on("second-instance", () => {
     showMainWindow();
