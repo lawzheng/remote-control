@@ -1,11 +1,13 @@
 {
   "name": "remote-control",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "app/main/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run start:renderer\" \"wait-on http://localhost:5173 && npm run start:electron\" ",
+    "start:ws": "cd ws && npm run start",
+    "start:update": "cd updater-server && npm run start",
     "start:electron": "electron .",
     "start:renderer": "cd app/renderer/src/main && npm run dev",
     "build": "cd app/renderer/src/main && npm run build",
@@ -28,6 +30,7 @@
   "dependencies": {
     "about-window": "^1.15.2",
     "electron-is-dev": "^3.0.1",
+    "electron-squirrel-startup": "^1.0.1",
     "robotjs": "^0.6.0",
     "vkey": "^1.0.1",
     "ws": "^8.18.3"

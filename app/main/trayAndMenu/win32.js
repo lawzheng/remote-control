@@ -13,6 +13,6 @@ app.whenReady().then(() => {
         { label: '退出', click: () => {app.quit()}}
     ])
     tray.setContextMenu(contextMenu)
-    // const menu = Menu.buildFromTemplate([])
-    // app.applicationMenu = menu;
+    const menu = Menu.buildFromTemplate([])
+    app.applicationMenu = menu;
 })
